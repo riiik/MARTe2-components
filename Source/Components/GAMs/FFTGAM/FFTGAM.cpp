@@ -151,7 +151,7 @@ bool FFTGAM::Setup() {
 
     // instantiate the CircularStaticList
     // TODO - parameterise the buffer size (1024, maybe insist on powers of 2 for now)
-    buffer = new CircularStaticList<uint32>(1024);
+    buffer = new CircularStaticList<uint32>(8);
 
 
     // Install message filter
@@ -195,7 +195,8 @@ template <class Type> bool FFTGAM::ExecuteT() {
     }
 
     if (ret) {
-        ref->GetLast(output);
+        // ref->GetLast(output);
+        ref->Peek(1u, output);
         ret = MemoryOperationsHelper::Copy(GetOutputSignalMemory(0u), &output, sizeof(Type));
     }
 
